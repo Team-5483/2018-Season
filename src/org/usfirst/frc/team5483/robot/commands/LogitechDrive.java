@@ -7,6 +7,7 @@
 
 package org.usfirst.frc.team5483.robot.commands;
 
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5483.robot.Robot;
 
@@ -22,6 +23,9 @@ public class LogitechDrive extends Command {
 
 	@Override
 	protected void execute() {
+		Robot.chassis.arcadeDrive(
+				Robot.primaryRemote.getX(Hand.kLeft), 
+				Robot.primaryRemote.getY(Hand.kRight));
 	}
 
 	@Override
@@ -33,8 +37,6 @@ public class LogitechDrive extends Command {
 	protected void end() {
 	}
 
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
 	@Override
 	protected void interrupted() {
 	}

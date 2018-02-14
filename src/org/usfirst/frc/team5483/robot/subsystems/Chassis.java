@@ -1,6 +1,7 @@
 package org.usfirst.frc.team5483.robot.subsystems;
 
 import org.usfirst.frc.team5483.robot.RobotMap;
+import org.usfirst.frc.team5483.robot.commands.LogitechDrive;
 
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -19,10 +20,10 @@ public class Chassis extends Subsystem {
 	private DifferentialDrive drive = new DifferentialDrive(lControllers, rControllers);
 	
 	public void initDefaultCommand() {
-		
+		setDefaultCommand(new LogitechDrive());
 	}
 	
-	public void tankDrive(double l, double r) {
-		drive.tankDrive(l, r, true);
+	public void arcadeDrive(double l, double r) {
+		drive.tankDrive(l + r, l - r, true);
 	}
 }
