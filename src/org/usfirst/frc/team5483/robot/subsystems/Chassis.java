@@ -5,6 +5,7 @@ import org.usfirst.frc.team5483.robot.commands.LogitechDrive;
 
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
@@ -19,6 +20,8 @@ public class Chassis extends Subsystem {
 	
 	private DifferentialDrive drive = new DifferentialDrive(lControllers, rControllers);
 	
+	//public Talon lift = new Talon(RobotMap.lift);
+		
 	public void initDefaultCommand() {
 		setDefaultCommand(new LogitechDrive());
 	}

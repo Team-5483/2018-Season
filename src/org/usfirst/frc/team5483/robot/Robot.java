@@ -1,27 +1,31 @@
 package org.usfirst.frc.team5483.robot;
 
+import org.usfirst.frc.team5483.robot.subsystems.Chassis;
+import org.usfirst.frc.team5483.robot.subsystems.Intake;
+import org.usfirst.frc.team5483.robot.subsystems.Lift;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.usfirst.frc.team5483.robot.subsystems.Chassis;
 
 public class Robot extends TimedRobot {
 	public static OI m_oi;
 
 	//Remotes
-	public static Joystick primaryRemote = new Joystick(RobotMap.primaryRemote);
-	public static Joystick secondaryRemote = new Joystick(RobotMap.secondaryRemote);
+	public static XboxController remote = new XboxController(RobotMap.remote);
 	
 	//Subsystems
 	public static Chassis chassis;
+	public static Lift lift;
+	public static Intake intake;
 	
 	@Override
 	public void robotInit() {
 		chassis = new Chassis();
-	
+		lift = new Lift();
+		intake = new Intake();
+		
 		m_oi = new OI();
 	}
 

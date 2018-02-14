@@ -7,25 +7,43 @@
 
 package org.usfirst.frc.team5483.robot.commands;
 
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5483.robot.Robot;
+import org.usfirst.frc.team5483.robot.RobotMap;
 
 
 public class LogitechDrive extends Command {
+	
+	Solenoid leftSol = new Solenoid(RobotMap.leftSol);
+	Solenoid rightSol = new Solenoid(RobotMap.rightSol);
+
+	Compressor c = new Compressor(RobotMap.compressor);
+	
 	public LogitechDrive() {
 		requires(Robot.chassis);
 	}
 
 	@Override
 	protected void initialize() {
+		c.setClosedLoopControl(true);
 	}
 
-	@Override
+	boolean leftOpen = false,rightOpen = false;
 	protected void execute() {
+		if(Robot.remote.getAButton()) {
+			leftOpen = !leftOpen;
+			leftSol.set(leftOpen);
+		}
+		if(Robot.remote.getBButton()) {
+			rightOpen = !rightOpen;
+			rightSol.set(rightOpen);
+		}
 		Robot.chassis.arcadeDrive(
-				Robot.primaryRemote.getX(Hand.kLeft), 
-				Robot.primaryRemote.getY(Hand.kRight));
+				-Robot.remote.getY(Hand.kLeft), 
+				Robot.remote.getX(Hand.kRight));
 	}
 
 	@Override
