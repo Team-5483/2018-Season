@@ -7,43 +7,71 @@
 
 package org.usfirst.frc.team5483.robot.commands;
 
-import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
-import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5483.robot.Robot;
 import org.usfirst.frc.team5483.robot.RobotMap;
+
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.command.Command;
 
 
 public class LogitechDrive extends Command {
 	
-	Solenoid leftSol = new Solenoid(RobotMap.leftSol);
-	Solenoid rightSol = new Solenoid(RobotMap.rightSol);
-
+	//Solenoid leftSol = new Solenoid(RobotMap.leftSol);
+	//Solenoid rightSol = new Solenoid(RobotMap.rightSol);
+	DoubleSolenoid  doubleSol = new DoubleSolenoid(RobotMap.leftSol,RobotMap.rightSol);
+	
 	Compressor c = new Compressor(RobotMap.compressor);
 	
 	public LogitechDrive() {
 		requires(Robot.chassis);
 	}
-
+	
+	boolean recharging  = false;
+	long start;
 	@Override
 	protected void initialize() {
-		c.setClosedLoopControl(true);
+	
+		c.setClosedLoopControl(false);
+		
 	}
 
 	boolean leftOpen = false,rightOpen = false;
 	protected void execute() {
-		if(Robot.remote.getAButton()) {
-			leftOpen = !leftOpen;
-			leftSol.set(leftOpen);
+		if(Robot.remote.getStartButtonPressed()) {
+			recharging = true;
+			start = System.currentTimeMillis();
+			
+			//c.setClosedLoopControl(!c.getClosedLoopControl());
+			c.setClosedLoopControl(true);
+		
 		}
-		if(Robot.remote.getBButton()) {
-			rightOpen = !rightOpen;
-			rightSol.set(rightOpen);
+		if(recharging && (System.currentTimeMillis()- start)/1000 > 20 ) {
+			c.setClosedLoopControl(false);
+			recharging = false;
+		}
+		
+		if(Robot.remote.getAButton()) {
+			doubleSol.set(DoubleSolenoid.Value.kReverse);
+
+			//leftSol.set(leftOpen);
+			//rightSol.set(rightOpen);
+		}
+		else if(Robot.remote.getBButton()) {
+			doubleSol.set(DoubleSolenoid.Value.kForward);
+
+			//rightOpen = !rightOpen;
+			//rightSol.set(rightOpen);
+
+		} else {
+			doubleSol.set(DoubleSolenoid.Value.kOff);
+
 		}
 		Robot.chassis.arcadeDrive(
-				-Robot.remote.getY(Hand.kLeft), 
-				Robot.remote.getX(Hand.kRight));
+				(-Robot.remote.getY(Hand.kLeft)), 
+				(Robot.remote.getX(Hand.kRight)));
 	}
 
 	@Override

@@ -15,13 +15,13 @@ public class LogitechLiftControl extends Command {
     }
 
     protected void execute() {
-    	Robot.lift.lift(0);
-    	
-    	if(Robot.remote.getBumper(Hand.kLeft)) {
+    	Robot.lift.lift(Robot.remote.getTriggerAxis(Hand.kRight)-Robot.remote.getTriggerAxis(Hand.kLeft));
+    	/*if(Robot.remote.getBumper(Hand.kLeft)) {
+    		
     		Robot.lift.lift(0.65);
     	} else if(Robot.remote.getBumper(Hand.kRight)) {
     		Robot.lift.lift(-0.50);
-    	}
+    	}*/
     	
     }
 

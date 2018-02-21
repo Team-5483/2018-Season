@@ -14,7 +14,6 @@ public class Intake extends Subsystem{
 
 	private Spark left = new Spark(RobotMap.leftIntakeMotor);
 	private Spark right = new Spark(RobotMap.rightIntakeMotor);
-	private SpeedControllerGroup motors = new SpeedControllerGroup(left, right);
 	
 	@Override
 	protected void initDefaultCommand() {
@@ -22,11 +21,15 @@ public class Intake extends Subsystem{
 	}
 	
 	public void in(double k) {
-		motors.set(k);
+		left.set(-k);
+		right.set(k);
+		//motors.set(k);
 	}
 	
 	public void out(double k) {
-		motors.set(k);
+		left.set(-k);
+		right.set(k);
+	//	motors.set(k);
 	}
 
 }

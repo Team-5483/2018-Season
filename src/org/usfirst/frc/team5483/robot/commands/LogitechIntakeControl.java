@@ -18,9 +18,9 @@ public class LogitechIntakeControl extends Command {
     	Robot.intake.in(0);
 		Robot.intake.out(0);
     	
-		if(Robot.remote.getAButton()) {
-			Robot.intake.in(0);
-		} else if (Robot.remote.getBButton()) {
+		if(Robot.remote.getBumper(Hand.kLeft)) {
+			Robot.intake.in(-1);
+		} else if (Robot.remote.getBumper(Hand.kRight)) {
 			Robot.intake.out(1);
 		}
     }
