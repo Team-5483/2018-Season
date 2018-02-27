@@ -1,11 +1,11 @@
 package org.usfirst.frc.team5483.robot.subsystems;
 
 import org.usfirst.frc.team5483.robot.RobotMap;
-import org.usfirst.frc.team5483.robot.commands.LogitechDrive;
+import org.usfirst.frc.team5483.robot.commands.DriveRobot;
+import org.usfirst.frc.team5483.utils.Maths;
 
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
@@ -21,30 +21,10 @@ public class Chassis extends Subsystem {
 	private DifferentialDrive drive = new DifferentialDrive(lControllers, rControllers);
 	
 	public void initDefaultCommand() {
-		setDefaultCommand(new LogitechDrive());
+		setDefaultCommand(new DriveRobot());
 	}
 	
 	public void arcadeDrive(double l, double r) {
-		drive.tankDrive(sig2(l) + square(r), sig2(l) - square(r));
-	}
-	public double square(double a) {
-		if(a > 0)
-			return a*a;
-		return -a*a;
-	}
-	
-	public static double cube(double a) {
-		return a*a*a;
-	}
-	
-	public static double sig(double a) {
-		return 2*(1/( 1 + Math.pow(Math.E,(-1*(5*a))))-0.5);
-	}
-	
-	public static double sig2(double a) {
-		int b = 1;
-		if( a < 0) b = -1;
-		
-		return b*((1/(1 + Math.pow(Math.E,((b*-4*a)+3)))) + 0.2);
+		drive.tankDrive(Maths.sig2(l) + Maths.square(r), Maths.sig2(l) - Maths.square(r));
 	}
 }

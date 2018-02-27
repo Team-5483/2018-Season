@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 public class Robot extends TimedRobot {
 	public static OI m_oi;
 
-	//Remotes
+	//Remote
 	public static XboxController remote = new XboxController(RobotMap.remote);
 	
 	//Subsystems
