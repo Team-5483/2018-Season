@@ -23,4 +23,12 @@ public class Maths {
 		
 		return b*((1/(1 + Math.pow(Math.E,((b*-4*a)+3)))) + 0.2);
 	}
+	
+	public static double sig3(double a) {
+		if(a ==0) return 0;
+		int b = 1;
+		if( a < 0) b = -1;
+		return b*((1/(1 + Math.pow(Math.E,((b*-4*a)+3)))))*1.2;
+		
+	}
 }
